@@ -1,60 +1,92 @@
 ---
 import Base from '../layouts/Base.astro';
-const skills = ['Docker', 'Kubernetes', 'Jenkins', 'Terraform', 'AWS', 'Google Cloud Platform', 'Cloudflare', 'Bash', 'Python', 'SQL'];
+import { getEntry, render } from 'astro:content';
+
+const entry = await getEntry('cv', 'cv');
+if (!entry) throw new Error('Missing src/content/cv/cv.md');
+const { Content, headings } = await render(entry);
+// Solo los "##" van al índice. Cambia a h.depth <= 3 para incluir también los "###".
+const toc = headings.filter((h) => h.depth === 2);
 ---
-<Base title="CV | zodiak">
-  <div lang="en">
-    <h1>Mateo Aja Moral</h1>
-    <p class="muted">SRE / Performance Engineer</p>
-    <p class="muted">Cantabria, Spain</p>
-    <p class="noprint">
-      <a href="mailto:mateoaja11@gmail.com">mateoaja11@gmail.com</a>
-      <span class="muted"> | </span>
-      <a href="https://www.linkedin.com/in/mateo-aja-moral">LinkedIn</a>
-      <span class="muted"> | </span>
-      <a href="https://github.com/ZodiakDrinker">GitHub</a>
-      <span class="muted"> | </span>
-      <a href="/cv.pdf">Download PDF</a>
-    </p>
+<Base title={`CV | ${entry.data.title}`}>
+  <div class="layout">
+    <div>
+      <h1>{entry.data.title}</h1>
+      <p class="muted">{entry.data.role}</p>
+      <p class="muted">{entry.data.location}</p>
 
-    <p>
-      Engineer experienced with Docker, Kubernetes, Jenkins and Terraform, with a passion for
-      optimizing deployment processes and ensuring reliable, scalable systems. Motivated, quick
-      learner, and eager to grow into a Cloud/DevOps leadership role.
-    </p>
+      {toc.length > 0 && (
+        <details class="toc-mobile noprint">
+          <summary>Contents</summary>
+          <ul>
+            {toc.map((h) => (
+              <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ul>
+        </details>
+      )}
 
-    <h2>Work Experience</h2>
-    <div class="job">
-      <h3>SRE / Performance Engineer, Fever</h3>
-      <p class="muted">April 2024 to present</p>
-      <ul>
-        <li>Administration of AWS WAF rules</li>
-        <li>Administration of EKS clusters</li>
-        <li>Administration of CI/CD environments</li>
-        <li>Creation of BI dashboards using QuickSight</li>
-        <li>Infrastructure creation using Terraform</li>
-        <li>Handling Cloudflare infrastructure</li>
-      </ul>
-    </div>
-    <div class="job">
-      <h3>Networking Frontline TSR, Google Cloud Platform, Webhelp</h3>
-      <p class="muted">August 2022 to April 2024</p>
-      <ul>
-        <li>Providing high-level support to customers and businesses managing their resources within Google Cloud Platform</li>
-      </ul>
+      <div class="cv"><Content /></div>
     </div>
 
-    <h2>Skills</h2>
-    <ul class="chips">{skills.map((s) => <li>{s}</li>)}</ul>
-
-    <h2>Certificates</h2>
-    <ul class="list">
-      <li><span class="muted">Feb 2024 to Feb 2026</span><span>GCP Professional Cloud Architect</span></li>
-      <li><span class="muted">Oct 2024 to Oct 2026</span><span>CKA: Certified Kubernetes Administrator</span></li>
-      <!-- Add security certifications here when you earn them -->
-    </ul>
-
-    <h2>Languages</h2>
-    <p>Spanish, English</p>
+    {toc.length > 0 && (
+      <aside class="toc-side noprint" aria-label="CV contents">
+        <nav>
+          <p class="muted">On this page</p>
+          <ul>
+            {toc.map((h) => (
+              <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
   </div>
 </Base>
+
+<style>
+  .layout { position: relative; }
+
+  .cv :global(h3) { font-size: 1rem; margin: 1.5rem 0 0; }
+  .cv :global(h3 + p) { color: var(--muted); margin-top: 0; }
+  .cv :global(ul) { margin: .4rem 0 0; padding-left: 1.2rem; }
+  .cv :global(h2), .cv :global(h3) { scroll-margin-top: 1.5rem; }
+
+  .toc-side ul, .toc-mobile ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+  li.d3 { padding-left: 1rem; }
+  .toc-side li a, .toc-mobile li a { display: block; padding: .15rem 0 .15rem .75rem; margin-left: -1px; border-left: 2px solid transparent; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  .toc-side li a:hover, .toc-mobile li a:hover { color: var(--text); text-decoration: none; }
+  .toc-side li a.active { color: var(--accent); border-left-color: var(--accent); }
+
+  .toc-side { display: none; }
+  .toc-mobile { border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: .5rem 1rem; margin: 1.5rem 0; }
+  .toc-mobile summary { cursor: pointer; }
+
+  @media (min-width: 80rem) {
+    .toc-mobile { display: none; }
+    .toc-side { display: block; position: absolute; top: 0; bottom: 0; left: calc(100% + 2rem); width: 15rem; }
+    .toc-side nav { position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; }
+    .toc-side ul { border-left: 1px solid var(--line); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) { :global(html) { scroll-behavior: smooth; } }
+</style>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc-side a')];
+  const byId = new Map(links.map((a) => [decodeURIComponent(a.hash.slice(1)), a]));
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        links.forEach((l) => l.classList.remove('active'));
+        byId.get(e.target.id)?.classList.add('active');
+      }
+    },
+    { rootMargin: '0px 0px -70% 0px' },
+  );
+  for (const id of byId.keys()) {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  }
+</script>
