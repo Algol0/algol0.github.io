@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writeups');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+<Base title={`${post.data.title} | zodiak`}>
+  <div class="layout">
+    <article>
+      <h1>{post.data.title}</h1>
+      <p class="muted">
+        {post.data.date.toISOString().slice(0, 10)} en {post.data.platform}, dificultad {post.data.difficulty}
+      </p>
+
+      {toc.length > 0 && (
+        <details class="toc-mobile">
+          <summary>Índice</summary>
+          <ul>
+            {toc.map((h) => (
+              <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ul>
+        </details>
+      )}
+
+      <Content />
+    </article>
+
+    {toc.length > 0 && (
+      <aside class="toc-side" aria-label="Índice del writeup">
+        <nav>
+          <p class="muted">En esta página</p>
+          <ul>
+            {toc.map((h) => (
+              <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    )}
+  </div>
+</Base>
+
+<style>
+  .layout { position: relative; }
+  ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+  li.d3 { padding-left: 1rem; }
+  li a { display: block; padding: .15rem 0 .15rem .75rem; margin-left: -1px; border-left: 2px solid transparent; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  li a:hover { color: var(--text); text-decoration: none; }
+  li a.active { color: var(--accent); border-left-color: var(--accent); }
+
+  .toc-side { display: none; }
+  .toc-mobile { border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: .5rem 1rem; margin: 1.5rem 0; }
+  .toc-mobile summary { cursor: pointer; }
+
+  @media (min-width: 80rem) {
+    .toc-mobile { display: none; }
+    .toc-side { display: block; position: absolute; top: 0; bottom: 0; left: calc(100% + 2rem); width: 15rem; }
+    .toc-side nav { position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; }
+    .toc-side ul { border-left: 1px solid var(--line); }
+  }
+
+  :global(article h2), :global(article h3) { scroll-margin-top: 1.5rem; }
+  @media (prefers-reduced-motion: no-preference) { :global(html) { scroll-behavior: smooth; } }
+</style>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc-side a')];
+  const byId = new Map(links.map((a) => [decodeURIComponent(a.hash.slice(1)), a]));
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        links.forEach((l) => l.classList.remove('active'));
+        byId.get(e.target.id)?.classList.add('active');
+      }
+    },
+    { rootMargin: '0px 0px -70% 0px' },
+  );
+  for (const id of byId.keys()) {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  }
+</script>

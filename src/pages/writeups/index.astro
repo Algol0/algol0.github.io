@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('writeups')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+---
+<Base title="Writeups | zodiak">
+  <h1>Writeups</h1>
+  <ul class="list">
+    {posts.map((p) => (
+      <li>
+        <span class="muted">{fmt(p.data.date)}</span>
+        <span>
+          <span class="tag">[{p.data.platform}]</span><a href={`/writeups/${p.id}/`}>{p.data.title}</a>
+          <br /><span class="muted">{p.data.difficulty}: {p.data.tags.join(', ')}</span>
+        </span>
+      </li>
+    ))}
+  </ul>
+</Base>

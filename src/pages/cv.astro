@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+const skills = ['Docker', 'Kubernetes', 'Jenkins', 'Terraform', 'AWS', 'GCP', 'Cloudflare', 'Bash', 'Python', 'SQL'];
+---
+<Base title="CV | zodiak">
+  <h1>Mateo Aja Moral</h1>
+  <p class="muted">SRE / Performance Engineer, Cantabria</p>
+  <p class="noprint"><a href="/cv.pdf">Descargar CV en PDF</a></p>
+
+  <h2>Experiencia</h2>
+  <div class="job">
+    <h3>SRE / Performance Engineer, Fever</h3>
+    <p class="muted">abril 2024 hasta hoy</p>
+    <ul>
+      <li>Operación de clústeres en AWS EKS y gestión de WAF.</li>
+      <li>CI/CD, infraestructura como código con Terraform y Cloudflare.</li>
+      <li>Dashboards de rendimiento con QuickSight.</li>
+    </ul>
+  </div>
+  <div class="job">
+    <h3>Networking Frontline TSR, Google Cloud Platform, Webhelp</h3>
+    <p class="muted">agosto 2022 a abril 2024</p>
+  </div>
+
+  <h2>Habilidades</h2>
+  <ul class="chips">{skills.map((s) => <li>{s}</li>)}</ul>
+
+  <h2>Certificaciones</h2>
+  <ul class="list">
+    <li><span class="muted">GCP</span><span>Professional Cloud Architect</span></li>
+    <li><span class="muted">CNCF</span><span>Certified Kubernetes Administrator (CKA)</span></li>
+    <!-- Añade aquí las certificaciones de seguridad cuando las tengas -->
+  </ul>
+
+  <h2>Idiomas</h2>
+  <p>Español e inglés.</p>
+</Base>
