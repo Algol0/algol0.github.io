@@ -86,7 +86,7 @@ ns1.silvertech.nyx.	86400	IN	A	192.168.1.36
 ;; MSG SIZE  rcvd: 144
 ```
 
-The we will add it to hour hosts
+We will add it to hour hosts
 ```bash
 echo '192.168.1.36 silvertech.nyx' | sudo tee -a /etc/hosts
 ```
