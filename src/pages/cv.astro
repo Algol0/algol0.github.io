@@ -1,37 +1,60 @@
 ---
 import Base from '../layouts/Base.astro';
-const skills = ['Docker', 'Kubernetes', 'Jenkins', 'Terraform', 'AWS', 'GCP', 'Cloudflare', 'Bash', 'Python', 'SQL'];
+const skills = ['Docker', 'Kubernetes', 'Jenkins', 'Terraform', 'AWS', 'Google Cloud Platform', 'Cloudflare', 'Bash', 'Python', 'SQL'];
 ---
 <Base title="CV | zodiak">
-  <h1>Mateo Aja Moral</h1>
-  <p class="muted">SRE / Performance Engineer, Cantabria</p>
-  <p class="noprint"><a href="/cv.pdf">Descargar CV en PDF</a></p>
+  <div lang="en">
+    <h1>Mateo Aja Moral</h1>
+    <p class="muted">SRE / Performance Engineer</p>
+    <p class="muted">Cantabria, Spain</p>
+    <p class="noprint">
+      <a href="mailto:mateoaja11@gmail.com">mateoaja11@gmail.com</a>
+      <span class="muted"> | </span>
+      <a href="https://www.linkedin.com/in/mateo-aja-moral">LinkedIn</a>
+      <span class="muted"> | </span>
+      <a href="https://github.com/ZodiakDrinker">GitHub</a>
+      <span class="muted"> | </span>
+      <a href="/cv.pdf">Download PDF</a>
+    </p>
 
-  <h2>Experiencia</h2>
-  <div class="job">
-    <h3>SRE / Performance Engineer, Fever</h3>
-    <p class="muted">abril 2024 hasta hoy</p>
-    <ul>
-      <li>Operación de clústeres en AWS EKS y gestión de WAF.</li>
-      <li>CI/CD, infraestructura como código con Terraform y Cloudflare.</li>
-      <li>Dashboards de rendimiento con QuickSight.</li>
+    <p>
+      Engineer experienced with Docker, Kubernetes, Jenkins and Terraform, with a passion for
+      optimizing deployment processes and ensuring reliable, scalable systems. Motivated, quick
+      learner, and eager to grow into a Cloud/DevOps leadership role.
+    </p>
+
+    <h2>Work Experience</h2>
+    <div class="job">
+      <h3>SRE / Performance Engineer, Fever</h3>
+      <p class="muted">April 2024 to present</p>
+      <ul>
+        <li>Administration of AWS WAF rules</li>
+        <li>Administration of EKS clusters</li>
+        <li>Administration of CI/CD environments</li>
+        <li>Creation of BI dashboards using QuickSight</li>
+        <li>Infrastructure creation using Terraform</li>
+        <li>Handling Cloudflare infrastructure</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>Networking Frontline TSR, Google Cloud Platform, Webhelp</h3>
+      <p class="muted">August 2022 to April 2024</p>
+      <ul>
+        <li>Providing high-level support to customers and businesses managing their resources within Google Cloud Platform</li>
+      </ul>
+    </div>
+
+    <h2>Skills</h2>
+    <ul class="chips">{skills.map((s) => <li>{s}</li>)}</ul>
+
+    <h2>Certificates</h2>
+    <ul class="list">
+      <li><span class="muted">Feb 2024 to Feb 2026</span><span>GCP Professional Cloud Architect</span></li>
+      <li><span class="muted">Oct 2024 to Oct 2026</span><span>CKA: Certified Kubernetes Administrator</span></li>
+      <!-- Add security certifications here when you earn them -->
     </ul>
+
+    <h2>Languages</h2>
+    <p>Spanish, English</p>
   </div>
-  <div class="job">
-    <h3>Networking Frontline TSR, Google Cloud Platform, Webhelp</h3>
-    <p class="muted">agosto 2022 a abril 2024</p>
-  </div>
-
-  <h2>Habilidades</h2>
-  <ul class="chips">{skills.map((s) => <li>{s}</li>)}</ul>
-
-  <h2>Certificaciones</h2>
-  <ul class="list">
-    <li><span class="muted">GCP</span><span>Professional Cloud Architect</span></li>
-    <li><span class="muted">CNCF</span><span>Certified Kubernetes Administrator (CKA)</span></li>
-    <!-- Añade aquí las certificaciones de seguridad cuando las tengas -->
-  </ul>
-
-  <h2>Idiomas</h2>
-  <p>Español e inglés.</p>
 </Base>

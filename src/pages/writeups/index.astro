@@ -11,7 +11,7 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
       <li>
         <span class="muted">{fmt(p.data.date)}</span>
         <span>
-          <span class="tag">[{p.data.platform}]</span><a href={`/writeups/${p.id}/`}>{p.data.title}</a>
+          <span class="tag">[{p.data.platform}]</span><a href={`/writeups/${p.id}/`}>{p.data.title}</a>{p.data.locked && <span class="muted"> (active)</span>}
           <br /><span class="muted">{p.data.difficulty}: {p.data.tags.join(', ')}</span>
         </span>
       </li>

@@ -10,28 +10,28 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
   <div class="term">
     <p><span class="prompt">$</span>whoami</p>
     <p class="out">Mateo Aja Moral (zodiak)</p>
-    <p><span class="prompt">$</span>cat rol.txt</p>
-    <p class="out">SRE en Fever. Operaba cloud, Kubernetes y WAF; ahora los ataco.</p>
-    <p><span class="prompt">$</span>cat objetivo.txt</p>
-    <p class="out">Pentesting de aplicaciones web e infraestructura cloud.</p>
+    <p><span class="prompt">$</span>cat role.txt</p>
+    <p class="out">SRE at Fever. I used to run cloud, Kubernetes and WAF; now I attack them.</p>
+    <p><span class="prompt">$</span>cat goal.txt</p>
+    <p class="out">Web application and cloud infrastructure pentesting.</p>
     <p class="cursor"><span class="prompt">$</span></p>
   </div>
 
-  <h2>Qué hago</h2>
+  <h2>What I do</h2>
   <ul class="list">
-    <li><span class="muted">web</span><span>Pentesting de aplicaciones web</span></li>
-    <li><span class="muted">cloud</span><span>Seguridad en AWS, GCP y Kubernetes</span></li>
-    <li><span class="muted">waf</span><span>Revisión y endurecimiento de reglas WAF</span></li>
+    <li><span class="muted">web</span><span>Web application pentesting</span></li>
+    <li><span class="muted">cloud</span><span>AWS, GCP and Kubernetes security</span></li>
+    <li><span class="muted">waf</span><span>WAF rule review and hardening</span></li>
   </ul>
 
-  <h2>Últimos writeups</h2>
+  <h2>Latest writeups</h2>
   <ul class="list">
     {posts.map((p) => (
       <li>
         <span class="muted">{fmt(p.data.date)}</span>
-        <span><span class="tag">[{p.data.platform}]</span><a href={`/writeups/${p.id}/`}>{p.data.title}</a></span>
+        <span><span class="tag">[{p.data.platform}]</span><a href={`/writeups/${p.id}/`}>{p.data.title}</a>{p.data.locked && <span class="muted"> (active)</span>}</span>
       </li>
     ))}
   </ul>
-  <p><a href="/writeups/">Ver todos los writeups</a></p>
+  <p><a href="/writeups/">View all writeups</a></p>
 </Base>

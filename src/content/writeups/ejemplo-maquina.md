@@ -1,21 +1,21 @@
 ---
-title: "Ejemplo: nombre de la máquina"
+title: "Example: machine name"
 date: 2026-10-28
 platform: HTB
 difficulty: easy
 tags: [linux, web, privesc]
 ---
 
-## Reconocimiento
+## Reconnaissance
 
 ```bash
 nmap -sC -sV -oN nmap.txt 10.10.10.10
 ```
 
-## Explotación
+## Exploitation
 
-Describe el vector, la evidencia y por qué funciona.
+Describe the vector, the evidence and why it works.
 
-## Escalada de privilegios
+## Privilege escalation
 
-## Remediación
+## Remediation
