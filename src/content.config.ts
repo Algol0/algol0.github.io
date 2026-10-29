@@ -15,4 +15,13 @@ const writeups = defineCollection({
   }),
 });
 
-export const collections = { writeups };
+const cv = defineCollection({
+  loader: glob({ pattern: 'cv.md', base: './src/content/cv' }),
+  schema: z.object({
+    title: z.string(),
+    role: z.string(),
+    location: z.string(),
+  }),
+});
+
+export const collections = { writeups, cv };
