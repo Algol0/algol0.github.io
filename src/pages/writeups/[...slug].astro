@@ -8,20 +8,23 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content, headings } = await render(post);
-const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const locked = post.data.locked;
+const rendered = locked ? null : await render(post);
+const Content = rendered?.Content;
+const toc = (rendered?.headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 3);
+const unlock = post.data.unlockDate?.toISOString().slice(0, 10);
 ---
 <Base title={`${post.data.title} | zodiak`}>
   <div class="layout">
     <article>
       <h1>{post.data.title}</h1>
       <p class="muted">
-        {post.data.date.toISOString().slice(0, 10)} en {post.data.platform}, dificultad {post.data.difficulty}
+        {post.data.date.toISOString().slice(0, 10)} on {post.data.platform}, {post.data.difficulty} difficulty
       </p>
 
       {toc.length > 0 && (
         <details class="toc-mobile">
-          <summary>Índice</summary>
+          <summary>Contents</summary>
           <ul>
             {toc.map((h) => (
               <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
@@ -30,13 +33,19 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
         </details>
       )}
 
-      <Content />
+      {locked ? (
+        <div class="locked" aria-hidden="true">
+          {[90, 100, 70, 95, 60, 100, 85, 50].map((w) => <div class="bar" style={`width:${w}%`} />)}
+        </div>
+      ) : (
+        Content && <Content />
+      )}
     </article>
 
     {toc.length > 0 && (
-      <aside class="toc-side" aria-label="Índice del writeup">
+      <aside class="toc-side" aria-label="Writeup contents">
         <nav>
-          <p class="muted">En esta página</p>
+          <p class="muted">On this page</p>
           <ul>
             {toc.map((h) => (
               <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
@@ -46,6 +55,17 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
       </aside>
     )}
   </div>
+
+  {locked && (
+    <dialog id="lock-dialog">
+      <h2>Active machine</h2>
+      <p>
+        This {post.data.platform} machine is still active, so its writeup cannot be published yet.
+        {unlock && ` It will be available once the machine is retired (expected: ${unlock}).`}
+      </p>
+      <p><a href="/writeups/">Back to writeups</a></p>
+    </dialog>
+  )}
 </Base>
 
 <style>
@@ -60,6 +80,11 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
   .toc-mobile { border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: .5rem 1rem; margin: 1.5rem 0; }
   .toc-mobile summary { cursor: pointer; }
 
+  .locked { margin-top: 2rem; filter: blur(6px); user-select: none; pointer-events: none; }
+  .bar { height: .9rem; margin: 1rem 0; border-radius: 3px; background: var(--line); }
+  dialog { background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 1.25rem 1.5rem; max-width: 26rem; }
+  dialog::backdrop { background: rgba(11, 16, 22, .75); backdrop-filter: blur(2px); }
+
   @media (min-width: 80rem) {
     .toc-mobile { display: none; }
     .toc-side { display: block; position: absolute; top: 0; bottom: 0; left: calc(100% + 2rem); width: 15rem; }
@@ -72,6 +97,9 @@ const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 </style>
 
 <script>
+  const dlg = document.getElementById('lock-dialog') as HTMLDialogElement | null;
+  dlg?.showModal();
+
   const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc-side a')];
   const byId = new Map(links.map((a) => [decodeURIComponent(a.hash.slice(1)), a]));
   const io = new IntersectionObserver(

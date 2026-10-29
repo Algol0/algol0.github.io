@@ -10,6 +10,8 @@ const writeups = defineCollection({
     platform: z.string(),
     difficulty: z.enum(['easy', 'medium', 'hard', 'insane']),
     tags: z.array(z.string()).default([]),
+    locked: z.boolean().default(false),
+    unlockDate: z.coerce.date().optional(),
   }),
 });
 
