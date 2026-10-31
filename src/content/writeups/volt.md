@@ -68,7 +68,7 @@ Starting gobuster in directory enumeration mode
 admin                (Status: 200) [Size: 3121]
 ...
 ```
-![Admin Pannel](/public/volt/admin-panel.png)
+![Admin Pannel](public/volt/admin-panel.png)
 
 After trying to send a request with user `admin` and password `admin` we are able to see that the request to login is a `POST` request so we will use hydra to try to forcebrute the login of `admin` user with the `rockyou.txt` wordlist.
 
