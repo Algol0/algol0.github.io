@@ -2,7 +2,7 @@
 title: "Volt"
 date: 2026-10-31
 platform: VulNyx
-dificulty: medium
+difficulty: medium
 locked: false
 tags: [linux, rce, web, ]
 ---
