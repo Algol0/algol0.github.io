@@ -1,9 +1,9 @@
 @import '@fontsource-variable/jetbrains-mono';
 
 :root {
-  --bg: #0b1016; --panel: #121a23; --line: #223041;
-  --text: #cfd8e3; --muted: #7a8a9c;
-  --accent: #5ad4e6; --warn: #f2b84b;
+  --bg: #07070b; --panel: #0f0f15; --line: #26262f;
+  --text: #d6d6de; --muted: #8a8a99;
+  --accent: #ff4d6d; --warn: #f2b84b;
 }
 * { box-sizing: border-box; }
 html { background: var(--bg); color-scheme: dark; }
