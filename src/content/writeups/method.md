@@ -202,8 +202,8 @@ www-data@method:~/html/webdav$ python -c 'import pty;pty.spawn("/bin/bash")'
 python -c 'import pty;pty.spawn("/bin/bash")'
 www-data@method:~/html/webdav$ export TERM=xterm
 export TERM=xterm
-www-data@method:~/html/webdav$ stty rows 183 cols 57
-stty rows 183 cols 57
+www-data@method:~/html/webdav$ stty cols 183 rows 57
+stty cols 183 rows 57
 www-data@method:~/html/webdav$
 ```
 
