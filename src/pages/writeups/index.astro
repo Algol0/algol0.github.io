@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('writeups')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
-<Base title="Writeups | zodiak">
+<Base title="Writeups | algol0">
   <h1>Writeups</h1>
   <ul class="list">
     {posts.map((p) => (
