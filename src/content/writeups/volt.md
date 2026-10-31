@@ -4,7 +4,7 @@ date: 2026-10-31
 platform: VulNyx
 difficulty: medium
 locked: false
-tags: [linux, rce, web, ]
+tags: [linux, rce, web ]
 ---
 
 ## Reconnaissance
