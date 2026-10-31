@@ -44,7 +44,7 @@ Nmap done: 1 IP address (1 host up) scanned in 6.30 seconds
 ```
 
 Accesing the webpage we are able to see a cart.
-![Web Portal](/public/volt/portal.png)
+![Web Portal](../../../public/volt/portal.png)
 
 With Gobuster we were able to find the path `/admin` which seems that contains a login pannel.
 ```bash
@@ -90,7 +90,7 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-10-31 00:23:
 ## Explotation
 
 Inside the admin pannel we can see that it has a feature where you specify the host on a text box and it sends a ping to that host.
-![Ping Function](/public/volt/ping-function.png)
+![Ping Function](../../../public/volt/ping-function.png)
 
 with this we can deduce that what it does is execcute the command `ping -c 1 $INPUT` so if we specify a host followed by `;` we should be able to do a Remote Code Execution(RCE).
 ```bash
