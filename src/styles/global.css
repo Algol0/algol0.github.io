@@ -88,3 +88,12 @@ article tbody tr:nth-child(even) td {
 article td code {
   color: var(--warn);
 }
+article :not(pre) > code,
+.cv :not(pre) > code {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: .1rem .4rem;
+  color: var(--warn);
+  font-size: .92em;
+}
