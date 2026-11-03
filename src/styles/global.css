@@ -63,3 +63,28 @@ article img, .cv img {
   border: 1px solid var(--line);
   border-radius: 6px;
 }
+
+article table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+}
+article th, article td {
+  border: 1px solid var(--line);
+  padding: .5rem .9rem;
+  text-align: left;
+  vertical-align: top;
+}
+article th {
+  background: var(--panel);
+  color: var(--accent);
+  white-space: nowrap;
+}
+article tbody tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.02);
+}
+article td code {
+  color: var(--warn);
+}
