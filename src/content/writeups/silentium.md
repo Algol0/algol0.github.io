@@ -1,6 +1,6 @@
 ---
 title: "Silentium"
-date: 2026-11-06
+date: 2026-11-07
 platform: HTB
 difficulty: easy
 locked: false
