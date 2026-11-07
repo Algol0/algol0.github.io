@@ -4,7 +4,7 @@ date: 2026-11-07
 platform: HTB
 difficulty: easy
 locked: false
-tags: [linux] 
+tags: [linux, web, git, docker] 
 ---
 
 ## Reconnaissance
