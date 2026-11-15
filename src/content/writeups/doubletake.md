@@ -4,7 +4,7 @@ platform: HTB
 date: 2026-11-14
 difficulty: easy
 locked: false
-tags: ["linux"]
+tags: ["linux","docker","ssh"]
 ---
 
 ## Reconnaissance
