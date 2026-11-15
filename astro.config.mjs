@@ -41,6 +41,13 @@ const kitty = {
 
 export default defineConfig({
   site: 'https://zodiakdrinker.github.io',
-  markdown: { shikiConfig: { theme: kitty, langs: [term] } },
+  markdown: {
+    shikiConfig: {
+      theme: kitty,
+      langs: [term],
+      // bash/sh/shell/console usan el lenguaje "term" (colores de kitty)
+      langAlias: { bash: 'term', sh: 'term', shell: 'term', console: 'term', zsh: 'term' },
+    },
+  },
 });
 
